@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codingdojo.cynthia.modelos.User;
 import com.codingdojo.cynthia.servicios.AppService;
@@ -55,4 +57,26 @@ public class ControladorUsuarios {
 		session.removeAttribute("user_session");
 		return "redirect:/";
 	}
+	
+	@PostMapping("/login")
+	public String login(@RequestParam("email") String email,
+						@RequestParam("password") String password,
+						RedirectAttributes redirectAttributes,
+						HttpSession session) {
+		
+		//Enviar email y password y que el servicio verifique que son correctos
+		User usuario_login = servicio.login(email, password);
+		
+		if(usuario_login == null) {
+			//Hay error
+			redirectAttributes.addFlashAttribute("error_login", "El correo/password son incorrectos");
+			return "redirect:/";
+		} else {
+			//Guardamos en sesión
+			session.setAttribute("user_session", usuario_login);
+			return "redirect:/dashboard";
+		}
+		
+	}
+	
 }

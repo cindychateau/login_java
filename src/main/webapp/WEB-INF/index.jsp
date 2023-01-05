@@ -12,7 +12,7 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-6">
+			<div class="col">
 				<h2>Regístrate</h2>
 				<!-- Mi FORM FORM ya me crea el objeto. BindingResult solo funciona con form:form -->
 				<form:form action="/register" method="post" modelAttribute="nuevoUsuario">
@@ -38,6 +38,24 @@
 					</div>
 					<input type="submit" value="Registrarme" class="btn btn-primary" />
 				</form:form>
+			</div>
+			<div class="col">
+				<h2>Inicia Sesión</h2>
+				<p class="text-danger">
+					<!-- ERRORES -->
+					${error_login}
+				</p>
+				<form action="/login" method="post">
+					<div class="form-group">
+						<label>E-mail</label>
+						<input type="email" class="form-control" name="email" />
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input type="password" class="form-control" name="password" />
+					</div>
+					<input type="submit" value="Iniciar Sesión" class="btn btn-info" />
+				</form>
 			</div>
 		</div>
 	</div>
